@@ -68,7 +68,7 @@ export default function StartGameMenu() {
         </TabsContent>
       </div>
       <div className="w-full flex flex-col justify-center items-center">
-        <Link href={`/games/${gameName}`}>
+        <Link href={`/games/${gameName.toLowerCase()}`}>
           <Button className="mt-4 text-base" size="lg" disabled={loading || !nameIsValid || gameNameExists}>
             Start <ArrowUpRight />
           </Button>
