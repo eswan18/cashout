@@ -1,14 +1,32 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Link from "next/link";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { generate } from "random-words";
 import { Button } from "@/components/ui/button";
 import { ArrowUpRight, RefreshCw } from "lucide-react";
+import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
+import { gameIdExists } from "@/lib/db_actions";
 
 export default function StartGameMenu() {
   const [gameName, setGameName] = useState(randomName());
+  const [gameNameExists, setGameNameExists] = useState(false);
+  const [loading, setLoading] = useState(true);
+
+  // Check if the game name exists in the database.
+  useEffect(() => {
+    setLoading(true);
+    gameIdExists({ gameId: gameName }).then((exists) => {
+      setGameNameExists(exists);
+      setLoading(false);
+    })
+  }, [gameName]);
+
+  // Game name must be only letters, numbers, and hyphens.
+  const nameIsValid = gameName.length > 0 && /^[a-zA-Z0-9-]+$/.test(gameName);
+
   return (
     <Tabs defaultValue="random">
       <TabsList>
@@ -32,17 +50,39 @@ export default function StartGameMenu() {
           </div>
         </TabsContent>
         <TabsContent value="custom">
-          <div className="flex flex-row justify-between items-center">
-            Change your password here.
+          <div className="flex flex-row justify-center items-center gap-3 w-full">
+            <Label
+              htmlFor="game-id"
+              className="text-base text-muted-foreground"
+            >
+              Game Name:
+            </Label>
+            <Input
+              name="game-id"
+              type="text"
+              className="max-w-40"
+              onChange={(e) => setGameName(e.target.value)}
+              value={gameName}
+            />
           </div>
         </TabsContent>
       </div>
-      <div className="w-full flex flex-row justify-center items-center">
+      <div className="w-full flex flex-col justify-center items-center">
         <Link href={`/games/${gameName}`}>
-          <Button className="mt-4 text-base" size="lg">
+          <Button className="mt-4 text-base" size="lg" disabled={loading || !nameIsValid || gameNameExists}>
             Start <ArrowUpRight />
           </Button>
         </Link>
+        {!nameIsValid && (
+          <div className="text-red-500 text-sm mt-2">
+            Game name must be only letters, numbers, and hyphens.
+          </div>
+        )}
+        {gameNameExists && (
+          <div className="text-red-500 text-sm mt-2">
+            Game name already exists.
+          </div>
+        )}
       </div>
     </Tabs>
   );
