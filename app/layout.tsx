@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import localFont from "next/font/local";
 import "./globals.css";
+import { Button } from "@/components/ui/button";
 
 const geistSans = localFont({
   src: "./fonts/GeistVF.woff",
@@ -28,6 +29,9 @@ export default function RootLayout({
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >
+        <div className="w-full flex flex-row py-1 border-b border-b-neutral-300">
+          <Button variant="ghost" className="text-base font-semibold">Poker Cashout</Button>
+        </div>
         {children}
       </body>
     </html>
