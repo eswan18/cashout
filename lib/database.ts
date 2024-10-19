@@ -8,7 +8,7 @@ dotenv.config({ path: '.env.local' });
 const connectionString = process.env.DATABASE_URL;
 
 const dialect = new PostgresDialect({
-  pool: new Pool({ connectionString, max: 3, ssl: { rejectUnauthorized: false } }),
+  pool: new Pool({ connectionString, max: 3 }),
 })
 
 export const db = new Kysely<Database>({ dialect });
