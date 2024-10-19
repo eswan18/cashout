@@ -63,6 +63,7 @@ export default function StartGameMenu() {
               className="max-w-40"
               onChange={(e) => setGameName(e.target.value)}
               value={gameName}
+              autoCapitalize="off"
             />
           </div>
         </TabsContent>
