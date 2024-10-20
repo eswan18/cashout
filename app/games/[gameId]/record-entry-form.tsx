@@ -24,7 +24,7 @@ const formSchema = z.object({
   cash_out: z.coerce.number().min(0.1).max(1000),
 });
 
-export default function NewEntryForm(
+export default function RecordEntryForm(
   { onSubmitEntry }: { onSubmitEntry: (entry: NewEntryWithoutGameId) => void },
 ) {
   const form = useForm<z.infer<typeof formSchema>>({

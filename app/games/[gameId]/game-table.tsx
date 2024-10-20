@@ -17,16 +17,8 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
-import { Button } from "@/components/ui/button";
-import { PlusCircle } from "lucide-react";
-import {
-  Dialog,
-  DialogContent,
-  DialogHeader,
-  DialogTrigger,
-} from "@/components/ui/dialog";
-import NewEntryForm from "./new-entry-form";
 import { createEntry } from "@/lib/db_actions";
+import RecordEntryButton from "./record-entry-button";
 
 interface GameTableProps<TData, TValue> {
   columns: ColumnDef<TData, TValue>[];
@@ -88,21 +80,11 @@ export default function GameTable<TData, TValue>({
           ))}
           <TableRow>
             <TableCell colSpan={columns.length} className="h-12 text-center">
-              <Dialog>
-                <DialogTrigger asChild>
-                  <Button variant="outline">
-                    Add Entry<PlusCircle />
-                  </Button>
-                </DialogTrigger>
-                <DialogContent>
-                  <DialogHeader>Add Entry</DialogHeader>
-                  <NewEntryForm
-                    onSubmitEntry={(entry) => {
-                      createEntry({ entry: { ...entry, game_id: gameId } });
-                    }}
-                  />
-                </DialogContent>
-              </Dialog>
+              <RecordEntryButton
+                recordEntry={(entry) => {
+                  createEntry({ entry: { ...entry, game_id: gameId } });
+                }}
+              />
             </TableCell>
           </TableRow>
         </TableBody>
