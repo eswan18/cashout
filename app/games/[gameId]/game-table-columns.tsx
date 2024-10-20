@@ -2,11 +2,26 @@
 
 import { ColumnDef } from "@tanstack/react-table";
 import { ComputedEntry } from "@/types/types";
+import { ArrowUpDown } from "lucide-react";
+import { Button } from "@/components/ui/button";
 
 export const gameTableColumns: ColumnDef<ComputedEntry>[] = [
   {
     accessorKey: "person",
-    header: "Player",
+    header: ({ column }) => {
+      return (
+        <Button
+          variant="ghost"
+          onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
+        >
+          Player
+          <ArrowUpDown className="ml-2 h-4 w-4" />
+        </Button>
+      )
+    },
+    cell: ({ row }) => {
+      return <div className="px-4">{row.getValue("person")}</div>;
+    }
   },
   {
     accessorKey: "buy_in",

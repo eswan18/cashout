@@ -17,7 +17,7 @@ export default async function Page({ params }: { params: { gameId: string } }) {
           <code>{gameId}</code>
         </span>
       </h1>
-      <GameTable columns={gameTableColumns} data={computedEntries} />
+      <GameTable columns={gameTableColumns} data={computedEntries} gameId={gameId} />
     </div>
   );
 }
