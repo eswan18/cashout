@@ -1,7 +1,7 @@
 import { CircleCheckBig, X } from "lucide-react";
-import GameTable from "./game-table";
-import { gameTableColumns } from "./game-table-columns";
+import { LedgerTable, ledgerTableColumns } from "./ledger-table";
 import { getEntriesForGame } from "@/lib/db_actions";
+import SettleUpCard from "./settle-up-card";
 
 export default async function Page({ params }: { params: { gameId: string } }) {
   const gameId = params.gameId.toLowerCase();
@@ -22,19 +22,23 @@ export default async function Page({ params }: { params: { gameId: string } }) {
           <code>{gameId}</code>
         </span>
       </h1>
-      <GameTable
-        columns={gameTableColumns}
+
+      <LedgerHeading balance={balance} />
+      <LedgerTable
+        columns={ledgerTableColumns}
         data={computedEntries}
         gameId={gameId}
       />
-      <div className="mt-8">
-        <BalanceStatus balance={balance} />
-      </div>
+      {balance === 0 && (
+        <div className="mt-8">
+          <SettleUpCard computedEntries={computedEntries} />
+        </div>
+      )}
     </div>
   );
 }
 
-function BalanceStatus({ balance }: { balance: number }) {
+function LedgerHeading({ balance }: { balance: number }) {
   const icon = balance === 0
     ? <CircleCheckBig size={32} className="text-green-400" />
     : <X size={32} className="text-red-600" />;
@@ -42,11 +46,11 @@ function BalanceStatus({ balance }: { balance: number }) {
     ? <span className="text-green-400 font-semibold text-lg">Balanced</span>
     : <span className="text-red-600 font-semibold text-lg">Unbalanced</span>;
   return (
-    <div className="flex flex-col justify-center items-center gap-2">
-      Settlement status
-      <div className="flex flex-row justify-center items-center gap-3">
-        {balanceText} {icon}
-      </div>
+    <div className="flex flex-row justify-center items-center gap-3 mb-4">
+      <h2 className="text-lg flex flex-row items-end justify-start gap-4">
+        <span>Ledger:</span> {balanceText}
+      </h2>
+      {icon}
     </div>
   );
 }

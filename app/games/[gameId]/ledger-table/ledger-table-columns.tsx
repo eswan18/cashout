@@ -5,8 +5,9 @@ import { ComputedEntry } from "@/types/types";
 import { ArrowUpDown, Trash } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { deleteEntry } from "@/lib/db_actions";
+import { asCurrency } from "@/lib/format";
 
-export const gameTableColumns: ColumnDef<ComputedEntry>[] = [
+export const ledgerTableColumns: ColumnDef<ComputedEntry>[] = [
   {
     accessorKey: "person",
     header: ({ column }) => {
@@ -30,7 +31,11 @@ export const gameTableColumns: ColumnDef<ComputedEntry>[] = [
     header: () => <div className="text-right text-xs md:text-sm">Buy-in</div>,
     cell: ({ row }) => {
       const amount = parseFloat(row.getValue("buy_in"));
-      return <div className="text-right text-muted-foreground">{asCurrency(amount)}</div>;
+      return (
+        <div className="text-right text-muted-foreground">
+          {asCurrency(amount, true)}
+        </div>
+      );
     },
   },
   {
@@ -38,7 +43,11 @@ export const gameTableColumns: ColumnDef<ComputedEntry>[] = [
     header: () => <div className="text-right text-xs md:text-sm">Cash-out</div>,
     cell: ({ row }) => {
       const amount = parseFloat(row.getValue("cash_out"));
-      return <div className="text-right text-muted-foreground">{asCurrency(amount)}</div>;
+      return (
+        <div className="text-right text-muted-foreground">
+          {asCurrency(amount, true)}
+        </div>
+      );
     },
   },
   {
@@ -46,7 +55,7 @@ export const gameTableColumns: ColumnDef<ComputedEntry>[] = [
     header: () => <div className="text-right text-xs md:text-sm">Net</div>,
     cell: ({ row }) => {
       const amount = parseFloat(row.getValue("net"));
-      return <div className="text-right">{asCurrency(amount)}</div>;
+      return <div className="text-right">{asCurrency(amount, true)}</div>;
     },
   },
   {
@@ -66,12 +75,3 @@ export const gameTableColumns: ColumnDef<ComputedEntry>[] = [
     },
   },
 ];
-
-export function asCurrency(amount: number) {
-  const formatted = new Intl.NumberFormat("en-US", {
-    style: "currency",
-    currency: "USD",
-  }).format(amount);
-  // Be sure to add a plus sign for positive amounts.
-  return formatted.startsWith("-") ? formatted : `+${formatted}`;
-}

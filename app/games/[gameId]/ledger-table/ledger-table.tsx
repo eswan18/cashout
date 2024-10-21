@@ -20,19 +20,19 @@ import {
 import { createEntry } from "@/lib/db_actions";
 import RecordEntryButton from "./record-entry-button";
 import { ComputedEntry } from "@/types/types";
-import { asCurrency } from "./game-table-columns";
+import { asCurrency } from "@/lib/format";
 
-interface GameTableProps {
+interface LedgerTableProps {
   columns: ColumnDef<ComputedEntry>[];
   data: ComputedEntry[];
   gameId: string;
 }
 
-export default function GameTable({
+export default function LedgerTable({
   columns,
   data,
   gameId,
-}: GameTableProps) {
+}: LedgerTableProps) {
   const [sorting, setSorting] = useState<SortingState>([]);
   const table = useReactTable({
     data,
