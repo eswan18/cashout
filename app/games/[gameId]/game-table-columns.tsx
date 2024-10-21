@@ -14,14 +14,15 @@ export const gameTableColumns: ColumnDef<ComputedEntry>[] = [
         <Button
           variant="ghost"
           onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
+          className="px-0"
         >
           Player
-          <ArrowUpDown className="ml-2 h-4 w-4" />
+          <ArrowUpDown className="ml-1 h-4 w-4" />
         </Button>
       );
     },
     cell: ({ row }) => {
-      return <div className="px-4">{row.getValue("person")}</div>;
+      return <div>{row.getValue("person")}</div>;
     },
   },
   {

@@ -1,4 +1,4 @@
-import { Check, CircleCheckBig, X } from "lucide-react";
+import { CircleCheckBig, X } from "lucide-react";
 import GameTable from "./game-table";
 import { gameTableColumns } from "./game-table-columns";
 import { getEntriesForGame } from "@/lib/db_actions";
