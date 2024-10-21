@@ -29,7 +29,7 @@ export const gameTableColumns: ColumnDef<ComputedEntry>[] = [
     header: () => <div className="text-right">Buy-in</div>,
     cell: ({ row }) => {
       const amount = parseFloat(row.getValue("buy_in"));
-      return <div className="text-right">{asCurrency(amount)}</div>;
+      return <div className="text-right text-muted-foreground">{asCurrency(amount)}</div>;
     },
   },
   {
@@ -37,7 +37,7 @@ export const gameTableColumns: ColumnDef<ComputedEntry>[] = [
     header: () => <div className="text-right">Cash-out</div>,
     cell: ({ row }) => {
       const amount = parseFloat(row.getValue("cash_out"));
-      return <div className="text-right">{asCurrency(amount)}</div>;
+      return <div className="text-right text-muted-foreground">{asCurrency(amount)}</div>;
     },
   },
   {
@@ -66,9 +66,11 @@ export const gameTableColumns: ColumnDef<ComputedEntry>[] = [
   },
 ];
 
-function asCurrency(amount: number) {
-  return new Intl.NumberFormat("en-US", {
+export function asCurrency(amount: number) {
+  const formatted = new Intl.NumberFormat("en-US", {
     style: "currency",
     currency: "USD",
   }).format(amount);
+  // Be sure to add a plus sign for positive amounts.
+  return formatted.startsWith("-") ? formatted : `+${formatted}`;
 }

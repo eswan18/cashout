@@ -1,7 +1,7 @@
 "use client";
 
 import { Button } from "@/components/ui/button";
-import { PlusCircle } from "lucide-react";
+import { Pencil } from "lucide-react";
 import {
   Dialog,
   DialogContent,
@@ -22,8 +22,8 @@ export default function RecordEntryButton(
   return (
     <Dialog open={open} onOpenChange={setOpen}>
       <DialogTrigger asChild>
-        <Button variant="outline">
-          Record New Entry<PlusCircle />
+        <Button variant="outline" size="sm">
+          Record New Entry<Pencil />
         </Button>
       </DialogTrigger>
       <DialogContent>

@@ -19,18 +19,20 @@ import {
 } from "@/components/ui/table";
 import { createEntry } from "@/lib/db_actions";
 import RecordEntryButton from "./record-entry-button";
+import { ComputedEntry } from "@/types/types";
+import { asCurrency } from "./game-table-columns";
 
-interface GameTableProps<TData, TValue> {
-  columns: ColumnDef<TData, TValue>[];
-  data: TData[];
+interface GameTableProps {
+  columns: ColumnDef<ComputedEntry>[];
+  data: ComputedEntry[];
   gameId: string;
 }
 
-export default function GameTable<TData, TValue>({
+export default function GameTable({
   columns,
   data,
   gameId,
-}: GameTableProps<TData, TValue>) {
+}: GameTableProps) {
   const [sorting, setSorting] = useState<SortingState>([]);
   const table = useReactTable({
     data,
@@ -42,6 +44,11 @@ export default function GameTable<TData, TValue>({
       sorting,
     },
   });
+  const totals = {
+    buy_in: data.reduce((acc, entry) => acc + Number(entry.buy_in), 0),
+    cash_out: data.reduce((acc, entry) => acc + Number(entry.cash_out), 0),
+    net: data.reduce((acc, entry) => acc + Number(entry.net), 0),
+  };
 
   return (
     <div className="rounded-md border">
@@ -78,6 +85,7 @@ export default function GameTable<TData, TValue>({
               ))}
             </TableRow>
           ))}
+          {/* A row with a Record New Entry button */}
           <TableRow>
             <TableCell colSpan={columns.length} className="h-12 text-center">
               <RecordEntryButton
@@ -85,6 +93,21 @@ export default function GameTable<TData, TValue>({
                   createEntry({ entry: { ...entry, game_id: gameId } });
                 }}
               />
+            </TableCell>
+          </TableRow>
+          {/* Totals row */}
+          <TableRow>
+            <TableCell>
+              <div className="px-4 font-semibold">Total</div>
+            </TableCell>
+            <TableCell>
+              <div className="text-right text-muted-foreground">{asCurrency(totals.buy_in)}</div>
+            </TableCell>
+            <TableCell>
+              <div className="text-right text-muted-foreground">{asCurrency(totals.cash_out)}</div>
+            </TableCell>
+            <TableCell>
+              <div className="text-right font-semibold">{asCurrency(totals.net)}</div>
             </TableCell>
           </TableRow>
         </TableBody>
