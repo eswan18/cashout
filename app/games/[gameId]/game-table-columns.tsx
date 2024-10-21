@@ -14,7 +14,7 @@ export const gameTableColumns: ColumnDef<ComputedEntry>[] = [
         <Button
           variant="ghost"
           onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
-          className="px-0"
+          className="px-0 text-xs md:text-sm"
         >
           Player
           <ArrowUpDown className="ml-1 h-4 w-4" />
@@ -22,12 +22,12 @@ export const gameTableColumns: ColumnDef<ComputedEntry>[] = [
       );
     },
     cell: ({ row }) => {
-      return <div>{row.getValue("person")}</div>;
+      return <div className="text-xs md:text-sm">{row.getValue("person")}</div>;
     },
   },
   {
     accessorKey: "buy_in",
-    header: () => <div className="text-right">Buy-in</div>,
+    header: () => <div className="text-right text-xs md:text-sm">Buy-in</div>,
     cell: ({ row }) => {
       const amount = parseFloat(row.getValue("buy_in"));
       return <div className="text-right text-muted-foreground">{asCurrency(amount)}</div>;
@@ -35,7 +35,7 @@ export const gameTableColumns: ColumnDef<ComputedEntry>[] = [
   },
   {
     accessorKey: "cash_out",
-    header: () => <div className="text-right">Cash-out</div>,
+    header: () => <div className="text-right text-xs md:text-sm">Cash-out</div>,
     cell: ({ row }) => {
       const amount = parseFloat(row.getValue("cash_out"));
       return <div className="text-right text-muted-foreground">{asCurrency(amount)}</div>;
@@ -43,7 +43,7 @@ export const gameTableColumns: ColumnDef<ComputedEntry>[] = [
   },
   {
     accessorKey: "net",
-    header: () => <div className="text-right">Net</div>,
+    header: () => <div className="text-right text-xs md:text-sm">Net</div>,
     cell: ({ row }) => {
       const amount = parseFloat(row.getValue("net"));
       return <div className="text-right">{asCurrency(amount)}</div>;
@@ -51,7 +51,7 @@ export const gameTableColumns: ColumnDef<ComputedEntry>[] = [
   },
   {
     accessorKey: "id",
-    header: () => <div className="text-right">Delete</div>,
+    header: () => <div className="text-right text-xs md:text-sm">Delete</div>,
     cell: ({ row }) => {
       return (
         <Button
