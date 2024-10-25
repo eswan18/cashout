@@ -3,6 +3,7 @@ import localFont from "next/font/local";
 import "./globals.css";
 import { Button } from "@/components/ui/button";
 import Link from "next/link";
+import { Toaster } from "@/components/ui/sonner";
 
 const geistSans = localFont({
   src: "./fonts/GeistVF.woff",
@@ -31,9 +32,14 @@ export default function RootLayout({
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >
         <div className="w-full flex flex-row py-1 border-b border-b-neutral-300">
-          <Link href="/"><Button variant="ghost" className="text-base font-semibold">Cashout</Button></Link>
+          <Link href="/">
+            <Button variant="ghost" className="text-base font-semibold">
+              Cashout
+            </Button>
+          </Link>
         </div>
         {children}
+        <Toaster />
       </body>
     </html>
   );
