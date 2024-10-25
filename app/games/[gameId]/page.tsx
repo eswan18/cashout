@@ -2,7 +2,7 @@ import { CircleCheckBig, X } from "lucide-react";
 import { LedgerTable, ledgerTableColumns } from "./ledger-table";
 import { getEntriesForGame } from "@/lib/db_actions";
 import SettleUpCard from "./settle-up-card";
-import GameLinkPanel from "./game-link-panel";
+import ShareGameButton from "./share-game-button";
 
 export default async function Page({ params }: { params: { gameId: string } }) {
   const gameId = params.gameId.toLowerCase();
@@ -17,14 +17,14 @@ export default async function Page({ params }: { params: { gameId: string } }) {
   );
   return (
     <div className="flex flex-col items-center justify-start p-4 lg:py-8 w-full">
-      <h1 className="text-2xl mb-1">
-        Game{" "}
-        <span className="font-semibold">
-          <code>{gameId}</code>
-        </span>
-      </h1>
-      <div className="mb-6">
-        <GameLinkPanel gameId={gameId} />
+      <div className="flex flex-row gap-4 mb-6">
+        <h1 className="text-2xl">
+          Game{" "}
+          <span className="font-semibold">
+            <code>{gameId}</code>
+          </span>
+        </h1>
+        <ShareGameButton gameId={gameId} />
       </div>
 
       <LedgerHeading balance={balance} />
