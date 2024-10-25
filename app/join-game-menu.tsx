@@ -30,6 +30,7 @@ export default function JoinGameMenu() {
             onChange={(e) => setGameName(e.target.value)}
             value={gameName}
             autoCapitalize="off"
+            autoCorrect="off"
           />
         </div>
       </div>

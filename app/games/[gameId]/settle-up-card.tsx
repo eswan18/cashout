@@ -1,32 +1,32 @@
-import {
-  Card,
-  CardContent,
-  CardHeader,
-  CardTitle,
-} from "@/components/ui/card";
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { asCurrency } from "@/lib/format";
 import { ComputedEntry } from "@/types/types";
+import { MoveRight } from "lucide-react";
 
 export default function SettleUpCard(
   { computedEntries }: { computedEntries: ComputedEntry[] },
 ) {
   const payments = simplifyPayments(computedEntries);
+  // Alphabetize the payments for consistency.
+  payments.sort((a, b) => a.from.localeCompare(b.from) || a.to.localeCompare(b.to));
   return (
     <Card>
-      <CardHeader>
-        <CardTitle>Settle Up</CardTitle>
+      <CardHeader className="items-center pb-4">
+        <CardTitle className="text-xl">Settle Up</CardTitle>
       </CardHeader>
       <CardContent>
         {payments.map((payment) => {
           return (
             <div
               key={payment.from + payment.to}
-              className="flex flex-row justify-between items-center gap-2"
+              className="flex flex-row justify-between items-center gap-6 border-b first:border-t px-1"
             >
-              <span>{payment.from}</span>
-              owes
-              <span>{payment.to}</span>
-              <span>{asCurrency(payment.amount)}</span>
+              <div className="flex flex-row items-center gap-2 py-1 text-sm">
+                <span>{payment.from}</span>
+                <MoveRight size={20} className="text-muted-foreground" />
+                <span>{payment.to}</span>
+              </div>
+              <div>{asCurrency(payment.amount)}</div>
             </div>
           );
         })}
