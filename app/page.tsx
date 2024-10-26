@@ -7,7 +7,7 @@ import {
   DialogTrigger,
 } from "@/components/ui/dialog";
 import StartGameMenu from "./start-game-menu";
-import JoinGameMenu from "./join-game-menu";
+import JoinGameForm from "./join-game-form";
 
 export default async function Home() {
   return (
@@ -32,7 +32,7 @@ export default async function Home() {
           <DialogHeader>
             <DialogTitle>Join Game</DialogTitle>
           </DialogHeader>
-          <JoinGameMenu />
+          <JoinGameForm />
         </DialogContent>
       </Dialog>
     </div>
