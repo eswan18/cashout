@@ -62,7 +62,7 @@ export const ledgerTableColumns: ColumnDef<ComputedEntry>[] = [
         <Button
           variant="ghost"
           onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
-          className="text-xs md:text-sm"
+          className="text-xs md:text-sm px-2 ml-3"
         >
           Net
           <ArrowUpDown className="ml-1 h-4 w-4" />
@@ -71,12 +71,15 @@ export const ledgerTableColumns: ColumnDef<ComputedEntry>[] = [
     ),
     cell: ({ row }) => {
       const amount = parseFloat(row.getValue("net"));
-      const color = amount >= 0 ? "bg-green-300" : "bg-red-300";
+      let textColor = "text-foreground";
+      if (amount > 0) {
+        textColor = "text-green-800";
+      } else if (amount < 0) {
+        textColor = "text-red-800";
+      }
       return (
-        <div className="flex flex-row justify-center">
-          <Badge variant="outline" className={color}>
-            {asCurrency(amount, true)}
-          </Badge>
+        <div className={`text-xs text-right font-semibold ${textColor}`}>
+          {asCurrency(amount, true)}
         </div>
       );
     },
