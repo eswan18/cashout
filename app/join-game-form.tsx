@@ -23,7 +23,6 @@ const formSchema = z.object({
   ),
 });
 
-
 export default function JoinGameForm() {
   const router = useRouter();
   const form = useForm<z.infer<typeof formSchema>>({
@@ -46,7 +45,12 @@ export default function JoinGameForm() {
             <FormItem>
               <FormLabel>Game Name</FormLabel>
               <FormControl>
-                <Input placeholder="abc-def" {...field} />
+                <Input
+                  placeholder="abc-def"
+                  autoCapitalize="off"
+                  autoComplete="off"
+                  {...field}
+                />
               </FormControl>
               <FormMessage />
             </FormItem>

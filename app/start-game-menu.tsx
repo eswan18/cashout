@@ -63,7 +63,12 @@ export default function StartGameForm() {
               <FormLabel>Game Name</FormLabel>
               <FormControl>
                 <div className="flex flex-row w-full gap-2">
-                  <Input placeholder="abc-def" {...field} />
+                  <Input
+                    placeholder="abc-def"
+                    autoCapitalize="off"
+                    autoComplete="off"
+                    {...field}
+                  />
                   <Button
                     variant="secondary"
                     size="icon"
@@ -77,7 +82,8 @@ export default function StartGameForm() {
                 </div>
               </FormControl>
               <FormDescription>
-                Choose a unique name for your game. You can use lowercase letters, digits, or dashes.
+                Choose a unique name for your game. You can use lowercase
+                letters, digits, or dashes.
               </FormDescription>
               <FormMessage />
             </FormItem>
