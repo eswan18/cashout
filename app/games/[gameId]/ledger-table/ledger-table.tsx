@@ -58,7 +58,7 @@ export default function LedgerTable({
             <TableRow key={headerGroup.id}>
               {headerGroup.headers.map((header) => {
                 return (
-                  <TableHead key={header.id}>
+                  <TableHead key={header.id} className="px-0">
                     {header.isPlaceholder ? null : flexRender(
                       header.column.columnDef.header,
                       header.getContext(),
@@ -76,7 +76,7 @@ export default function LedgerTable({
               data-state={row.getIsSelected() && "selected"}
             >
               {row.getVisibleCells().map((cell) => (
-                <TableCell key={cell.id} className="py-1">
+                <TableCell key={cell.id} className="py-1 px-3">
                   {flexRender(
                     cell.column.columnDef.cell,
                     cell.getContext(),

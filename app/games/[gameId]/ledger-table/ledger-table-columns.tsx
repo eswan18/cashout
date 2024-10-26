@@ -16,7 +16,7 @@ export const ledgerTableColumns: ColumnDef<ComputedEntry>[] = [
         <Button
           variant="ghost"
           onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
-          className="px-0 text-xs md:text-sm"
+          className="text-xs md:text-sm"
         >
           Player
           <ArrowUpDown className="ml-1 h-4 w-4" />
@@ -29,7 +29,9 @@ export const ledgerTableColumns: ColumnDef<ComputedEntry>[] = [
   },
   {
     accessorKey: "buy_in",
-    header: () => <div className="text-right text-xs md:text-sm">Buy-in</div>,
+    header: () => (
+      <div className="text-right text-xs md:text-sm px-2">Buy-in</div>
+    ),
     cell: ({ row }) => {
       const amount = parseFloat(row.getValue("buy_in"));
       return (
@@ -41,7 +43,9 @@ export const ledgerTableColumns: ColumnDef<ComputedEntry>[] = [
   },
   {
     accessorKey: "cash_out",
-    header: () => <div className="text-right text-xs md:text-sm">Cash-out</div>,
+    header: () => (
+      <div className="text-right text-xs md:text-sm px-2">Cash-out</div>
+    ),
     cell: ({ row }) => {
       const amount = parseFloat(row.getValue("cash_out"));
       return (
@@ -53,14 +57,23 @@ export const ledgerTableColumns: ColumnDef<ComputedEntry>[] = [
   },
   {
     accessorKey: "net",
-    header: () => (
-      <div className="text-right text-xs md:text-sm px-2.5">Net</div>
+    header: ({ column }) => (
+      <div className="text-right">
+        <Button
+          variant="ghost"
+          onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
+          className="text-xs md:text-sm"
+        >
+          Net
+          <ArrowUpDown className="ml-1 h-4 w-4" />
+        </Button>
+      </div>
     ),
     cell: ({ row }) => {
       const amount = parseFloat(row.getValue("net"));
       const color = amount >= 0 ? "bg-green-300" : "bg-red-300";
       return (
-        <div className="text-right text-green-700">
+        <div className="flex flex-row justify-center">
           <Badge variant="outline" className={color}>
             {asCurrency(amount, true)}
           </Badge>
