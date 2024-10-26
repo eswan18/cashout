@@ -6,7 +6,6 @@ import { ArrowUpDown, Trash } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { deleteEntry } from "@/lib/db_actions";
 import { asCurrency } from "@/lib/format";
-import { Badge } from "@/components/ui/badge";
 
 export const ledgerTableColumns: ColumnDef<ComputedEntry>[] = [
   {
