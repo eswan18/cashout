@@ -24,7 +24,7 @@ function randomName() {
 }
 
 const formSchema = z.object({
-  gameName: z.string().min(2).max(20).regex(
+  gameId: z.string().min(2).max(20).regex(
     /^[a-z0-9-]+$/,
     "Must be lowercase letters, digits, or dashes only",
   ),
@@ -35,21 +35,21 @@ export default function StartGameForm() {
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
-      gameName: randomName(),
+      gameId: randomName(),
     },
   });
   async function onSubmit(values: z.infer<typeof formSchema>) {
     // Reject game names that already exist.
-    const gameExists = await gameIdExists({ gameId: values.gameName });
+    const gameExists = await gameIdExists({ gameId: values.gameId });
     if (gameExists) {
-      form.setError("gameName", {
+      form.setError("gameId", {
         type: "manual",
         message: "This game name already exists. Please choose another.",
       });
       return;
     }
     // Redirect to the game page.
-    const gameUrl = `/games/${values.gameName}`;
+    const gameUrl = `/games/${values.gameId}`;
     router.push(gameUrl);
   }
   return (
@@ -57,7 +57,7 @@ export default function StartGameForm() {
       <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">
         <FormField
           control={form.control}
-          name="gameName"
+          name="gameId"
           render={({ field }) => (
             <FormItem>
               <FormLabel>Game Name</FormLabel>
@@ -69,7 +69,7 @@ export default function StartGameForm() {
                     size="icon"
                     type="button"
                     onClick={() => {
-                      form.setValue("gameName", randomName());
+                      form.setValue("gameId", randomName());
                     }}
                   >
                     <RefreshCw />

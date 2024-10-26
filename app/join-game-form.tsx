@@ -17,7 +17,7 @@ import {
 import { useRouter } from "next/navigation";
 
 const formSchema = z.object({
-  gameName: z.string().min(2).max(20).regex(
+  gameId: z.string().min(2).max(20).regex(
     /^[a-z0-9-]+$/,
     "Must be lowercase letters, digits, or dashes only",
   ),
@@ -29,11 +29,11 @@ export default function JoinGameForm() {
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
-      gameName: "",
+      gameId: "",
     },
   });
   function onSubmit(values: z.infer<typeof formSchema>) {
-    const gameUrl = `/games/${values.gameName}`;
+    const gameUrl = `/games/${values.gameId}`;
     router.push(gameUrl);
   }
   return (
@@ -41,7 +41,7 @@ export default function JoinGameForm() {
       <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">
         <FormField
           control={form.control}
-          name="gameName"
+          name="gameId"
           render={({ field }) => (
             <FormItem>
               <FormLabel>Game Name</FormLabel>
